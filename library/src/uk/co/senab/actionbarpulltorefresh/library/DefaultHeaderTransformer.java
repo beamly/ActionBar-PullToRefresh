@@ -16,7 +16,10 @@
 
 package uk.co.senab.actionbarpulltorefresh.library;
 
-import uk.co.senab.actionbarpulltorefresh.library.sdk.Compat;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -35,13 +38,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.view.ViewHelper;
-
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
 
@@ -129,7 +125,7 @@ public class DefaultHeaderTransformer extends HeaderTransformer {
 		// Reset the Content Layout
 		if (mContentLayout != null) {
 			mContentLayout.setVisibility(View.VISIBLE);
-			Compat.setAlpha(mContentLayout, 1f);
+			mContentLayout.setAlpha(1f);
 		}
 	}
 
@@ -198,7 +194,7 @@ public class DefaultHeaderTransformer extends HeaderTransformer {
 
 		if (changeVis) {
 			Animator animator;
-			if (ViewHelper.getAlpha(mContentLayout) >= 0.5f) {
+			if (mContentLayout.getAlpha() >= 0.5f) {
 				// If the content layout is showing, translate and fade out
 				animator = new AnimatorSet();
 				ObjectAnimator transAnim = ObjectAnimator.ofFloat(mContentLayout, "translationY", 0f, -mContentLayout.getHeight());
